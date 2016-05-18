@@ -1,10 +1,47 @@
 $(document).ready(function(){
-  // NEW TWEETS BUTTON
 
+  // NEW TWEETS BUTTON
   $("#btn").on("click", loadTweets);
 
   function changeBtnText(text) {
     $("#btn").text(text);
+  }
+
+  // TWEET SETUP LOOP
+  function tweetSetup(stream, div, index, user) {
+
+    stream = stream[user] || stream;
+
+    $.each(stream, function(index, item) {
+      var tweet = item,
+          $tweetContainer = $("<div></div>").addClass("tweet-container"),
+          $userAndTime = $("<div></div>").addClass("user-and-time"),
+          $user = $("<a href='#'></a>").addClass("user"),
+          $time = $("<span></span>").addClass("time"),
+          $tweet = $("<div></div>").addClass("tweet");
+
+      $user.text("@" + tweet.user);
+      $time.text(tweet.created_at);
+      $tweet.text(tweet.message);
+
+      if (!user) {
+        $user.on("click", function() {
+          userClick($(this).text());
+        });
+      }
+
+      $userAndTime
+        .append($user)
+        .append($time);
+
+      $tweetContainer
+        .append($userAndTime)
+        .append($tweet);
+
+      $tweetContainer.prependTo(div);
+
+    });
+
   }
 
 
@@ -14,49 +51,29 @@ $(document).ready(function(){
   // this value will be updated and will be the starting point in the streams.home array every time loadTweets() is run.
   // "index" is found in outermost function because subsequent invocations of "loadTweets" need access
   // to its constantly updated value.
-  var index = 0;
+  var allTweetsIndex = 0;
 
   // feed that displays all tweets from all users.
   function loadTweets(i) {
 
-    var $feed = (".feed");
+    var $feed = (".feed"),
+        btnText = "check for new tweets";
 
-    // use loop to create HTML setup for each tweet.
-    $.each(streams.home, function(i, value) {
-      // establish HTML element for each tweet component.
-      var tweet = value,
-          $tweetContainer = $("<div></div>").addClass("tweet-container"),
-          $userAndTime = $("<div></div>").addClass("user-and-time"),
-          $user = $("<a href='#'></a>").addClass("user"),
-          $time = $("<span></span>").addClass("time"),
-          $tweet = $("<div></div>").addClass("tweet");
+    $(".user-tweets").find(".tweet-container").remove();
+    $(".feed").show();
 
-      // assign appropriate text for various tweet components using
-      // "tweet" object in data_generator.js.
-      $user.text("@" + tweet.user);
-      $time.text(tweet.created_at);
-      $tweet.text(tweet.message);
+    tweetSetup(streams.home, $feed, allTweetsIndex);
 
-      // append elements to container divs.
-      $userAndTime
-        .append($user)
-        .append($time);
-
-      $tweetContainer
-        .append($userAndTime)
-        .append($tweet);
-
-      // prepend tweets to $feed in order for them to be in reverse chronological order.
-      $tweetContainer.prependTo($feed);
-    });
-
-    index = i;
+    allTweetsIndex = i;
+    changeBtnText(btnText);
 
   }
 
   // LOAD USER-SPECIFIC TWEETS
 
   function userClick(user) {
+
+    user = user.slice(1);
 
     var $userTweets = $(".user-tweets"),
         btnText = "go back to feed";
@@ -65,32 +82,13 @@ $(document).ready(function(){
     $(".feed").hide();
     $(".user-tweets").show();
 
-    // use loop to create HTML setup for each tweet component.
-    $.each(streams.users[user], function(i, value) {
-      var tweet = value,
-          $tweetContainer = $("<div></div>").addClass("tweet-container"),
-          $userAndTime = $("<div></div>").addClass("user-and-time"),
-          $user = $("<a href='#'></a>").addClass("user"),
-          $time = $("<span></span>").addClass("time"),
-          $tweet = $("<div></div>").addClass("tweet");
+    tweetSetup(streams.users, $userTweets, 0, user);
 
-      $user.text("@" + tweet.user);
-      $time.text(tweet.created_at);
-      $tweet.text(tweet.message);
+    changeBtnText(btnText);
 
-      $userAndTime
-        .append($user)
-        .append($time);
-
-      $tweetContainer
-        .append($userAndTime)
-        .append($tweet);
-
-      $tweetContainer.prependTo($userTweets);
-    };
   }
 
 
-  loadTweets(index);
+  loadTweets(allTweetsIndex);
 
 });
