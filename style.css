@@ -60,3 +60,33 @@ h1 {
 #btn:hover {
   background-color: #366982;
 }
+
+/* feed */
+
+.tweet-container {
+  width: 90%;
+  padding: 33px;
+  margin: 8px auto;
+  background-color: #fff;
+  border: 1px solid #EBEBEB;
+  font-size: 0.875em;
+}
+
+.user-and-time {
+  margin-bottom: 15px;
+}
+
+.user {
+  font-weight: 600;
+  color: #629FBC;
+}
+
+.time {
+  font-weight: 300;
+  color: #9DA1AC;
+  float: right;
+}
+
+.tweet {
+  color: #3A4251;
+}
