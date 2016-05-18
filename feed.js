@@ -1,5 +1,12 @@
 $(document).ready(function(){
-  // new tweets button
+  // NEW TWEETS BUTTON
+
+  $("#btn").on("click", loadTweets);
+
+  function changeBtnText(text) {
+    $("#btn").text(text);
+  }
+
 
   // LOAD ALL USER TWEETS
 
