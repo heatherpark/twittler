@@ -13,7 +13,7 @@ $(document).ready(function(){
     // use loop to create HTML setup for each tweet.
     $.each(streams.home, function(i, value) {
       // establish HTML element for each tweet component.
-      var tweet = streams.home[i],
+      var tweet = value,
           $tweetContainer = $("<div></div>").addClass("tweet-container"),
           $userAndTime = $("<div></div>").addClass("user-and-time"),
           $user = $("<a href='#'></a>").addClass("user"),
@@ -26,12 +26,26 @@ $(document).ready(function(){
       $time.text(tweet.created_at);
       $tweet.text(tweet.message);
 
+      // append elements to container divs.
+      $userAndTime
+        .append($user)
+        .append($time);
+
+      $tweetContainer
+        .append($userAndTime)
+        .append($tweet);
+
       // prepend tweets to $feed in order for them to be in reverse chronological order.
       $tweetContainer.prependTo($feed);
     });
+
+    index = i;
 
   }
 
   // load user-specific tweets
 
-};
+
+  loadTweets(index);
+
+});
