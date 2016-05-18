@@ -3,6 +3,10 @@ $(document).ready(function(){
 
   // LOAD ALL USER TWEETS
 
+  // declare "index" variable and its value.
+  // this value will be updated and will be the starting point in the streams.home array every time loadTweets() is run.
+  // "index" is found in outermost function because subsequent invocations of "loadTweets" need access
+  // to its constantly updated value.
   var index = 0;
 
   // feed that displays all tweets from all users.
