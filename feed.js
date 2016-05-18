@@ -47,7 +47,41 @@ $(document).ready(function(){
 
   }
 
-  // load user-specific tweets
+  // LOAD USER-SPECIFIC TWEETS
+
+  function userClick(user) {
+
+    var $userTweets = $(".user-tweets"),
+        btnText = "go back to feed";
+
+    // display correct feed div.
+    $(".feed").hide();
+    $(".user-tweets").show();
+
+    // use loop to create HTML setup for each tweet component.
+    $.each(streams.users[user], function(i, value) {
+      var tweet = value,
+          $tweetContainer = $("<div></div>").addClass("tweet-container"),
+          $userAndTime = $("<div></div>").addClass("user-and-time"),
+          $user = $("<a href='#'></a>").addClass("user"),
+          $time = $("<span></span>").addClass("time"),
+          $tweet = $("<div></div>").addClass("tweet");
+
+      $user.text("@" + tweet.user);
+      $time.text(tweet.created_at);
+      $tweet.text(tweet.message);
+
+      $userAndTime
+        .append($user)
+        .append($time);
+
+      $tweetContainer
+        .append($userAndTime)
+        .append($tweet);
+
+      $tweetContainer.prependTo($userTweets);
+    };
+  }
 
 
   loadTweets(index);
