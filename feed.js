@@ -20,12 +20,16 @@ $(document).ready(function(){
 
       // assign appropriate text for various tweet components using
       // "tweet" object in data_generator.js.
+      $user.text("@" + tweet.user);
+      $time.text(tweet.created_at);
+      $tweet.text(tweet.message);
 
       // prepend tweets to $feed in order for them to be in reverse chronological order.
+      $tweetContainer.prependTo($feed);
     });
 
   }
 
   // load user-specific tweets
 
-}
+};
