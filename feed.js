@@ -3,15 +3,17 @@ $(document).ready(function(){
 
   // LOAD ALL USER TWEETS
 
+  var index = 0;
+
   // feed that displays all tweets from all users.
-  function loadTweets(index) {
+  function loadTweets(i) {
 
     var $feed = (".feed");
 
     // use loop to create HTML setup for each tweet.
-    $.each(streams.home, function(index, value) {
+    $.each(streams.home, function(i, value) {
       // establish HTML element for each tweet component.
-      var tweet = streams.home[index],
+      var tweet = streams.home[i],
           $tweetContainer = $("<div></div>").addClass("tweet-container"),
           $userAndTime = $("<div></div>").addClass("user-and-time"),
           $user = $("<a href='#'></a>").addClass("user"),
