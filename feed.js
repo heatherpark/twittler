@@ -11,6 +11,12 @@ $(document).ready(function(){
     // use loop to create HTML setup for each tweet.
     $.each(streams.home, function(index, value) {
       // establish HTML element for each tweet component.
+      var tweet = streams.home[index],
+          $tweetContainer = $("<div></div>").addClass("tweet-container"),
+          $userAndTime = $("<div></div>").addClass("user-and-time"),
+          $user = $("<a href='#'></a>").addClass("user"),
+          $time = $("<span></span>").addClass("time"),
+          $tweet = $("<div></div>").addClass("tweet");
 
       // assign appropriate text for various tweet components using
       // "tweet" object in data_generator.js.
