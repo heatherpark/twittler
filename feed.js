@@ -70,7 +70,6 @@ $(document).ready(function(){
   }
 
   // LOAD USER-SPECIFIC TWEETS
-
   function userClick(user) {
 
     user = user.slice(1);
