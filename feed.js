@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
   // NEW TWEETS BUTTON
@@ -21,7 +22,7 @@ $(document).ready(function(){
           $tweet = $("<div></div>").addClass("tweet");
 
       $user.text("@" + tweet.user);
-      $time.text(tweet.created_at);
+      $time.text(moment(tweet.created_at).fromNow());
       $tweet.text(tweet.message);
 
       if (!user) {
